@@ -7,12 +7,14 @@ using testWpfProcedure.Repo.Data;
 using testWpfProcedure.Repo;
 using DevExpress.Xpf.Editors;
 using System.ComponentModel;
+using System.Windows.Data;
+using System.Windows.Controls;
 
 namespace testWpfProcedure
 {
 
 
-    public class MyViewModel : INotifyPropertyChanged
+    public  class MyViewModel : INotifyPropertyChanged
     {
         private string docType;
         private string docCo;
@@ -57,6 +59,7 @@ namespace testWpfProcedure
     {
         private readonly IUserData userData;
         private MyViewModel viewModel;
+        Binding binding = new Binding();
         public MainWindow()
         {
             InitializeComponent();
@@ -65,10 +68,72 @@ namespace testWpfProcedure
 
             // Qwe();
 
-            using (var dbContext = new DataTestContext())
+            //using (var dbContext = new DataTestContext())
+            //{
+
+            //    List<User> users = dbContext.Users.ToList();
+
+            //}
+
+
+          
+
+            binding.ElementName = "myTextBox"; // элемент-источник
+            binding.Path = new PropertyPath("Text"); // свойство элемента-источника
+            myTextBlock.SetBinding(TextBlock.TextProperty, binding); // установка привязки для элемента-приемника
+
+       
+
+        }
+
+
+
+
+        private void Doc_Type_EditValueChanged_1(object sender, EditValueChangedEventArgs e)
+        {
+
+        }
+
+
+
+      
+
+
+        private string userInput = "";
+        private void FilterTextEdit_KeyDown1(object sender, KeyEventArgs e)
+        {
+
+
+
+
+
+            var textEdit = sender as TextEdit;
+            if (textEdit != null)
             {
 
-                List<User> users = dbContext.Users.ToList();
+
+                string newText = (sender as TextEdit)?.Text + e.Key.ToString();
+                if (IsNumericKey(e.Key))
+                {
+                    // Если нажата цифровая клавиша, добавляем символ
+                    var digit = GetDigitFromKey(e.Key);
+                 
+                }
+
+                 if (e.Key == Key.Back && viewModel.DocType.Length > 0)
+                {
+                    // Если нажата клавиша Backspace и есть символы для удаления
+                    viewModel.DocType = viewModel.DocType.Substring(0, viewModel.DocType.Length - 0);
+                }
+
+
+
+                // Перемещаем каретку в конец текста
+                  textEdit.CaretIndex = viewModel.DocType.Length;
+
+                // Помечаем событие как обработанное
+                e.Handled = true;
+
 
             }
 
@@ -76,8 +141,17 @@ namespace testWpfProcedure
 
 
 
+        private bool IsNumericKey(Key key)
+        {
+            // Проверка, является ли клавиша цифровой
+            return key >= Key.D0 && key <= Key.D9;
+        }
 
-
+        private string GetDigitFromKey(Key key)
+        {
+            // Получение символа из цифровой клавиши
+            return ((int)key - (int)Key.D0).ToString();
+        }
 
 
 
@@ -87,12 +161,38 @@ namespace testWpfProcedure
         private void FilterTextEdit_KeyDown2(object sender, KeyEventArgs e)
         {
 
-            string newText = (sender as TextEdit)?.Text + e.Key; //first symbol
-            TextEdit filterTextEditDoc_co = sender as TextEdit;
-            viewModel.DocCo = filterTextEditDoc_co.Text;
+          
+
+            string newText = (sender as TextEdit)?.Text + e.Key.ToString(); //first symbol
+
+            if (IsNumericKey(e.Key))
+            {
+                // Если нажата цифровая клавиша, добавляем символ
+                var digit = GetDigitFromKey(e.Key);
+                viewModel.DocCo += digit;
+            }
+            if ((e.Key == Key.Back      ||
+                e.Key == Key.Right      || 
+                e.Key == Key.Left ) && viewModel.DocCo.Length > 0)
+            {
+                // Если нажата клавиша Backspace и есть символы для удаления
+                viewModel.DocCo = viewModel.DocCo.Substring(0, viewModel.DocCo.Length - 1);
+            }
+            else
+            {
+                viewModel.DocCo = newText;
+                TextEdit filterTextEditDoc_co = sender as TextEdit;
+
+            }
 
 
-           
+            if (e.Key == Key.Enter)
+            {
+
+             
+                
+            }
+
 
 
         }
@@ -315,5 +415,7 @@ namespace testWpfProcedure
                 // Вы можете выполнить дополнительные действия здесь, если нужно
             }
         }
+
+       
     }
 }

@@ -16,8 +16,9 @@
     <Window.Resources>
         <DataTemplate x:Key="Doc_TypeHeaderTemplate">
             <StackPanel Orientation="Vertical">
-                <TextBlock Text="Тип документу" />
-                <dxe:TextEdit x:Name="Doc_Type" KeyDown="FilterTextEdit_KeyDown" Text="{Binding DocType, Mode=TwoWay}"/>
+                <TextBlock Text="Тип документу"  />
+                <dxe:TextEdit x:Name="Doc_Type" KeyDown="FilterTextEdit_KeyDown" Text="{Binding DocType, Mode=TwoWay}" PreviewKeyDown="FilterTextEdit_KeyDown1" />
+                
             </StackPanel>
         </DataTemplate>
 
@@ -103,6 +104,9 @@
 
 
             <Grid Grid.Row="1">
+                
+               
+                
                 <StackPanel HorizontalAlignment="Right" VerticalAlignment="Bottom" Orientation="Horizontal" >
                     <dxdo:LayoutGroup Orientation="Horizontal" ShowCaption="False" ItemHeight="Auto">
 
@@ -121,7 +125,12 @@
             </Grid>
 
 
-
+            <Grid Grid.Row="2">
+                <StackPanel>
+                    <TextBox x:Name="myTextBox" Height="30" />
+                    <TextBlock x:Name="myTextBlock" Text="{Binding ElementName=myTextBox,Path=Text}" Height="30" />
+                </StackPanel>
+            </Grid>
 
 
             <dxg:GridControl Grid.Row="3" x:Name="ItemsMoveRest" 

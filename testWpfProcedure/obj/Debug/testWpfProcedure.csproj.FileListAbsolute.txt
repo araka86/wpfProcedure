@@ -177,4 +177,3 @@ D:\Udemy\WPF\testWpfProcedure\testWpfProcedure\obj\Debug\Window1.baml
 D:\Udemy\WPF\testWpfProcedure\testWpfProcedure\obj\Debug\testWpfProcedure.csproj.CopyComplete
 D:\Udemy\WPF\testWpfProcedure\testWpfProcedure\obj\Debug\testWpfProcedure.exe
 D:\Udemy\WPF\testWpfProcedure\testWpfProcedure\obj\Debug\testWpfProcedure.pdb
-D:\Udemy\WPF\testWpfProcedure\testWpfProcedure\obj\Debug\testWpfProcedure.csprojAssemblyReference.cache
